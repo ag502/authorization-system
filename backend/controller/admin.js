@@ -7,7 +7,12 @@ async function getAllUsers() {
   return users;
 }
 
+async function deleteUsers(ids) {
+  await User.destroy({ where: { id: ids } });
+}
+
 const adminController = {};
 adminController.getAllUsers = getAllUsers;
+adminController.deleteUsers = deleteUsers;
 
 module.exports = adminController;

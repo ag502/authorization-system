@@ -9,7 +9,16 @@ router.get("/all-users", async (req, res) => {
     const allUsers = await adminController.getAllUsers();
     res.status(200).send({ message: message.REQUEST_SUCCESS, data: allUsers });
   } catch (err) {
-    console.log(err);
+    res.status(500).send({ message: message.SERVER_ERROR });
+  }
+});
+
+router.delete("/users", async (req, res) => {
+  const { ids } = req.body;
+  try {
+    await adminController.deleteUsers(ids);
+    res.status(200).send({ message: message.REQUEST_SUCCESS });
+  } catch (err) {
     res.status(500).send({ message: message.SERVER_ERROR });
   }
 });
