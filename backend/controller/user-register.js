@@ -1,13 +1,10 @@
 const db = require("../models");
-const bcrypt = require("bcrypt");
-
-const SALT_ROUNDS = 10;
+const { makeHashedPassword } = require("../commons/functions");
 
 const { User } = db;
 
 async function checkExistence(id) {
   const user = await User.findOne({ where: { name: id } });
-  console.log(user);
   if (user) {
     return true;
   } else {
@@ -15,10 +12,9 @@ async function checkExistence(id) {
   }
 }
 
-function addUserAccount(id, password) {
-  bcrypt.hash(password, SALT_ROUNDS, async (err, hash) => {
-    await User.create({ name: id, password: hash });
-  });
+async function addUserAccount(id, password) {
+  const hashedPassword = await makeHashedPassword(password);
+  await User.create({ name: id, password: hashedPassword });
 }
 
 const registerController = {};

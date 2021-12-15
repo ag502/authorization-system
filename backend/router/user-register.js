@@ -13,7 +13,7 @@ router.post("/register", async (req, res) => {
     if (isExistedUser) {
       res.status(409).send({ message: message.ALREADY_EXISTENCE });
     } else {
-      registerController.addUserAccount(id, password);
+      await registerController.addUserAccount(id, password);
       res.status(201).send({ message: message.REQUEST_SUCCESS });
     }
   } catch (err) {
