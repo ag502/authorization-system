@@ -14,4 +14,16 @@ function makeHashedPassword(password) {
   });
 }
 
-module.exports = { makeHashedPassword };
+function comparePassword(password, hashedPassword) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, hashedPassword, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+}
+
+module.exports = { makeHashedPassword, comparePassword };
