@@ -12,4 +12,4 @@ const User = require("./user")(sequelize, Sequelize.DataTypes);
 const db = {};
 db.User = User;
 
-module.export = db;
+module.exports = db;
