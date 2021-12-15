@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const db = require("../models");
 const {
   development: { secret },
+  jwtExpire,
 } = require("../config/config.json");
 const { comparePassword } = require("../commons/functions");
 
@@ -20,8 +21,16 @@ async function checkAccount(id, password) {
 
 function makeJWTToken(id) {
   return new Promise((resolve, reject) => {
-    jwt.sign({ data: id }, secret, { expiresIn: "25m" }, (err, token) => {
+    jwt.sign({ data: id }, secret, { expiresIn: jwtExpire }, (err, token) => {
       err ? reject(err) : resolve(token);
+    });
+  });
+}
+
+function verifyToken(token) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, secret, (err, decode) => {
+      err ? resolve(null) : resolve(decode);
     });
   });
 }
@@ -29,5 +38,6 @@ function makeJWTToken(id) {
 const authController = {};
 authController.checkAccount = checkAccount;
 authController.makeJWTToken = makeJWTToken;
+authController.verifyToken = verifyToken;
 
 module.exports = authController;
