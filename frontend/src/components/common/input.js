@@ -7,7 +7,7 @@ function Input(props) {
       name={props.name}
       type={props.type}
       fullWidth={props.fullWidth}
-      placeholder={props.splaceholder}
+      placeholder={props.placeholder}
       onChange={props.onChange}
       onBlur={props.onBlur}
       onFocus={props.onFocus}
@@ -20,7 +20,7 @@ const CustomInput = styled.input`
   display: inline-block;
   width: ${(props) => (props.fullWidth ? "100%" : "fit-content")};
   border-radius: 5px;
-  border: none;
+  border: 1px solid;
   padding: 10px;
 `;
 

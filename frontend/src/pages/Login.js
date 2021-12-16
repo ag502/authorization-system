@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import AuthForm from "../layout/auth-form";
-import { Input } from "../components/common";
+import { Input, InputError } from "../components/common";
 
 import useFormik from "../hooks/useFormik";
 
@@ -27,36 +27,46 @@ function Login() {
 
   return (
     <AuthForm>
-      <LoginInput
-        name='id'
-        type='text'
-        fullWidth
-        placeholder='아이디를 입력해 주세요'
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.id}
-      />
-      {formik.touched.id && formik.errors.id ? (
-        <div>{formik.errors.id}</div>
-      ) : null}
-      <LoginInput
-        name='password'
-        type='password'
-        fullWidth
-        placeholder='비밀번호를 입력해 주세요'
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.password}
-      />
-      {formik.touched.password && formik.errors.password ? (
-        <div>{formik.errors.password}</div>
-      ) : null}
+      <div>
+        <LoginInput
+          name='id'
+          type='text'
+          fullWidth
+          placeholder='아이디를 입력해 주세요'
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.id}
+          isError={formik.touched.id && formik.errors.id}
+        />
+        {formik.touched.id && formik.errors.id ? (
+          <InputError content={formik.errors.id} />
+        ) : null}
+      </div>
+      <div>
+        <LoginInput
+          name='password'
+          type='password'
+          fullWidth
+          placeholder='비밀번호를 입력해 주세요'
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.password}
+          isError={formik.touched.password && formik.errors.password}
+        />
+        {formik.touched.password && formik.errors.password ? (
+          <InputError content={formik.errors.password} />
+        ) : null}
+      </div>
     </AuthForm>
   );
 }
 
 const LoginInput = styled(Input)`
-  margin-bottom: 25px; ;
+  && {
+    border-color: ${(props) => (props.isError ? "#d32f2f" : "#f5f5f5")};
+  }
+  outline-color: #0aaf9e;
+  margin-bottom: 10px;
 `;
 
 export default Login;

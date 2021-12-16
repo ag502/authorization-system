@@ -6,6 +6,7 @@ function AuthForm({ children }) {
 }
 
 const AuthFormContainer = styled.form`
+  background-color: #ffffff;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -13,8 +14,10 @@ const AuthFormContainer = styled.form`
   width: 500px;
   margin: 0 auto;
   padding: 20px;
-  background-color: red;
   border-radius: 10px;
+  > div {
+    margin-bottom: 15px;
+  }
 `;
 
 export default memo(AuthForm);
