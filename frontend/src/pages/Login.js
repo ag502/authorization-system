@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import AuthForm from "../layout/auth-form";
@@ -64,6 +65,9 @@ function Login() {
       <Button fontColor='#ffffff' fullWidth>
         로그인
       </Button>
+      <RegisterLinkContainer>
+        <RegisterLink to='/register'>Register Now</RegisterLink>
+      </RegisterLinkContainer>
     </AuthForm>
   );
 }
@@ -74,6 +78,18 @@ const LoginInput = styled(Input)`
   }
   outline-color: #0aaf9e;
   margin-bottom: 10px;
+`;
+
+const RegisterLinkContainer = styled.div`
+  text-align: center;
+  && {
+    margin: 10px 0px 0px;
+  }
+`;
+
+const RegisterLink = styled(Link)`
+  color: #0aaf9e;
+  font-weight: bold;
 `;
 
 export default Login;
