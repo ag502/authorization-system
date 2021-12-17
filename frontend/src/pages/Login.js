@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import AuthForm from "../layout/auth-form";
-import { Input, InputError } from "../components/common";
+import { Input, InputError, Button } from "../components/common";
 
 import Validator from "../common/validator";
 import useFormik from "../hooks/useFormik";
@@ -61,6 +61,9 @@ function Login() {
           <InputError content={formik.errors.password} />
         ) : null}
       </div>
+      <Button fontColor='#ffffff' fullWidth>
+        로그인
+      </Button>
     </AuthForm>
   );
 }
