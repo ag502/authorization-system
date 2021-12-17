@@ -1,20 +1,22 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import AuthForm from "../layout/auth-form";
 import { Input, InputError, Button } from "../components/common";
 
 import Validator from "../common/validator";
 import useFormik from "../hooks/useFormik";
+import { requestLogin } from "../common/api/auth";
 import { inputPlaceholder, validationMessage } from "../common/constants";
+import { addTokenToLocalStorage } from "../common/manageToken";
 
 const validate = (values) => {
   const errors = {};
 
   errors.id = Validator()
+    .require(validationMessage.ID_REQUIRED)
     .email(validationMessage.VALUE_ABNORMAL)
     .max(validationMessage.EXCEED_MAX_LENGTH(45), 45)
-    .require(validationMessage.ID_REQUIRED)
     .test(values.id);
 
   errors.password = Validator()
@@ -29,6 +31,18 @@ function Login() {
     initialValues: { id: "", password: "" },
     validate,
   });
+
+  const handleLoginClick = async () => {
+    try {
+      const { token } = await requestLogin({
+        id: formik.values.id,
+        password: formik.values.password,
+      });
+      addTokenToLocalStorage(token);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <AuthForm>
@@ -62,7 +76,7 @@ function Login() {
           <InputError content={formik.errors.password} />
         ) : null}
       </div>
-      <Button fontColor='#ffffff' fullWidth>
+      <Button fontColor='#ffffff' fullWidth onClick={handleLoginClick}>
         로그인
       </Button>
       <RegisterLinkContainer>
