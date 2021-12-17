@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import AuthForm from "../layout/auth-form";
 import { Input, InputError, Button, SnackBar } from "../components/common";
@@ -31,6 +31,7 @@ function Login() {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [snackBarMsg, setSnackBarMsg] = useState("");
 
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: { id: "", password: "" },
     validate,
@@ -43,6 +44,7 @@ function Login() {
         password: formik.values.password,
       });
       addTokenToLocalStorage(token);
+      navigate("/main");
     } catch (err) {
       setSnackBarMsg(err);
       setSnackBarOpen(true);
