@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 function Button(props) {
-  const { height, children, color, fontColor, fullWidth, type } = props;
+  const { height, children, color, fontColor, fullWidth, type, onClick } =
+    props;
   return (
     <CustomButton
       height={height}
@@ -9,6 +10,7 @@ function Button(props) {
       fontColor={fontColor}
       fullWidth={fullWidth}
       type={type}
+      onClick={onClick}
     >
       {children}
     </CustomButton>

@@ -7,6 +7,11 @@ export const validationMessage = {
   },
 };
 
+export const requestMessage = {
+  SERVER_ERROR: "서버 오류입니다. 잠시 후에 시도해 주세요",
+  ACCOUNT_NOT_EXIST: "존재하지 않는 계정 입니다",
+};
+
 export const inputPlaceholder = {
   ID: "아이디를 입력해 주세요",
   PASSWORD: "비밀번호를 입력해 주세요",

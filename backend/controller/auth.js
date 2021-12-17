@@ -2,8 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const db = require("../models");
 const {
-  development: { secret },
-  jwtExpire,
+  development: { secret, jwtExpire },
 } = require("../config/config.json");
 const { comparePassword } = require("../commons/functions");
 

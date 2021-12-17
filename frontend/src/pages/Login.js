@@ -1,20 +1,23 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import AuthForm from "../layout/auth-form";
-import { Input, InputError, Button } from "../components/common";
+import { Input, InputError, Button, SnackBar } from "../components/common";
 
 import Validator from "../common/validator";
 import useFormik from "../hooks/useFormik";
+import { requestLogin } from "../common/api/auth";
 import { inputPlaceholder, validationMessage } from "../common/constants";
+import { addTokenToLocalStorage } from "../common/manageToken";
 
 const validate = (values) => {
   const errors = {};
 
   errors.id = Validator()
+    .require(validationMessage.ID_REQUIRED)
     .email(validationMessage.VALUE_ABNORMAL)
     .max(validationMessage.EXCEED_MAX_LENGTH(45), 45)
-    .require(validationMessage.ID_REQUIRED)
     .test(values.id);
 
   errors.password = Validator()
@@ -25,50 +28,79 @@ const validate = (values) => {
 };
 
 function Login() {
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [snackBarMsg, setSnackBarMsg] = useState("");
+
   const formik = useFormik({
     initialValues: { id: "", password: "" },
     validate,
   });
 
+  const handleLoginClick = async () => {
+    try {
+      const { token } = await requestLogin({
+        id: formik.values.id,
+        password: formik.values.password,
+      });
+      addTokenToLocalStorage(token);
+    } catch (err) {
+      setSnackBarMsg(err);
+      setSnackBarOpen(true);
+    }
+  };
+
+  const handleSnackBarClose = () => {
+    setSnackBarOpen(false);
+  };
+
   return (
-    <AuthForm>
-      <div>
-        <LoginInput
-          name='id'
-          type='text'
-          fullWidth
-          placeholder={inputPlaceholder.ID}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.id}
-          isError={formik.touched.id && formik.errors.id}
-        />
-        {formik.touched.id && formik.errors.id ? (
-          <InputError content={formik.errors.id} />
-        ) : null}
-      </div>
-      <div>
-        <LoginInput
-          name='password'
-          type='password'
-          fullWidth
-          placeholder={inputPlaceholder.PASSWORD}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-          isError={formik.touched.password && formik.errors.password}
-        />
-        {formik.touched.password && formik.errors.password ? (
-          <InputError content={formik.errors.password} />
-        ) : null}
-      </div>
-      <Button fontColor='#ffffff' fullWidth>
-        로그인
-      </Button>
-      <RegisterLinkContainer>
-        <RegisterLink to='/register'>Register Now</RegisterLink>
-      </RegisterLinkContainer>
-    </AuthForm>
+    <>
+      <AuthForm>
+        <div>
+          <LoginInput
+            name='id'
+            type='text'
+            fullWidth
+            placeholder={inputPlaceholder.ID}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.id}
+            isError={formik.touched.id && formik.errors.id}
+          />
+          {formik.touched.id && formik.errors.id ? (
+            <InputError content={formik.errors.id} />
+          ) : null}
+        </div>
+        <div>
+          <LoginInput
+            name='password'
+            type='password'
+            fullWidth
+            placeholder={inputPlaceholder.PASSWORD}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
+            isError={formik.touched.password && formik.errors.password}
+          />
+          {formik.touched.password && formik.errors.password ? (
+            <InputError content={formik.errors.password} />
+          ) : null}
+        </div>
+        <Button fontColor='#ffffff' fullWidth onClick={handleLoginClick}>
+          로그인
+        </Button>
+        <RegisterLinkContainer>
+          <RegisterLink to='/register'>Register Now</RegisterLink>
+        </RegisterLinkContainer>
+      </AuthForm>
+      <SnackBar
+        open={snackBarOpen}
+        message={snackBarMsg}
+        onClose={handleSnackBarClose}
+        autoHideDuration={600}
+        severity='error'
+      />
+    </>
   );
 }
 

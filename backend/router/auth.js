@@ -11,7 +11,7 @@ router.post("/login", async (req, res) => {
     const canLogin = await authController.checkAccount(id, password);
     if (canLogin) {
       const token = await authController.makeJWTToken(id);
-      res.status(200).send({ message: message.REQUEST_SUCCESS, data: token });
+      res.status(200).send({ message: message.REQUEST_SUCCESS, token });
     } else {
       res.status(401).send({ message: message.REQUEST_FAIL });
     }
