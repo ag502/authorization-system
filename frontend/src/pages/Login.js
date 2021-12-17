@@ -3,18 +3,22 @@ import styled from "styled-components";
 import AuthForm from "../layout/auth-form";
 import { Input, InputError } from "../components/common";
 
+import Validator from "../common/validator";
 import useFormik from "../hooks/useFormik";
+import { inputPlaceholder, validationMessage } from "../common/constants";
 
 const validate = (values) => {
   const errors = {};
 
-  if (!values.id) {
-    errors.id = "아이디를 입력해 주세요.";
-  }
+  errors.id = Validator()
+    .email(validationMessage.VALUE_ABNORMAL)
+    .max(validationMessage.EXCEED_MAX_LENGTH(45), 45)
+    .require(validationMessage.ID_REQUIRED)
+    .test(values.id);
 
-  if (!values.password) {
-    errors.password = "비밀번호를 입력해 주세요.";
-  }
+  errors.password = Validator()
+    .require(validationMessage.PASSWORD_REQUIRED)
+    .test(values.password);
 
   return errors;
 };
@@ -32,7 +36,7 @@ function Login() {
           name='id'
           type='text'
           fullWidth
-          placeholder='아이디를 입력해 주세요'
+          placeholder={inputPlaceholder.ID}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.id}
@@ -47,7 +51,7 @@ function Login() {
           name='password'
           type='password'
           fullWidth
-          placeholder='비밀번호를 입력해 주세요'
+          placeholder={inputPlaceholder.PASSWORD}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
