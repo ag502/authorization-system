@@ -32,7 +32,9 @@ router.get("/check", async (req, res) => {
     const result = await authController.verifyToken(token);
 
     if (result) {
-      res.status(200).send({ message: message.ALREADY_LOGIN, data: result });
+      res
+        .status(200)
+        .send({ message: message.ALREADY_LOGIN, userData: result });
     } else {
       res.status(401).send({ message: message.NOT_LOGIN });
     }

@@ -32,7 +32,9 @@ export const checkLogin = () => {
       .get("/check", {
         headers: { "x-access-token": token },
       })
-      .then((res) => resolve(res.data))
+      .then((res) => {
+        resolve(res.data);
+      })
       .catch((err) => {
         const { response } = err;
         if (response.status === 401) {
