@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
@@ -6,6 +7,10 @@ import Main from "./pages/Main";
 import InitialStyles from "./common/styles/init";
 
 function App() {
+  useEffect(() => {
+    console.log("a");
+  }, []);
+
   return (
     <>
       <InitialStyles />

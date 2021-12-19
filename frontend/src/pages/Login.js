@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ import {
 
 import Validator from "../common/validator";
 import useFormik from "../hooks/useFormik";
-import { requestLogin } from "../common/api/auth";
+import { checkLogin, requestLogin } from "../common/api/auth";
 import { inputPlaceholder, validationMessage } from "../common/constants";
 import { addTokenToLocalStorage } from "../common/manageToken";
 
@@ -36,13 +36,29 @@ function Login() {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [snackBarMsg, setSnackBarMsg] = useState("");
 
-  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: { id: "", password: "" },
     validate,
   });
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = useCallback(async () => {
+    try {
+      const { userData } = await checkLogin();
+      navigate("/main", { state: { userName: userData.data } });
+    } catch (err) {}
+  }, []);
+
   const handleLoginClick = async () => {
+    const canSubmit = formik.handleSubmit();
+    if (!canSubmit) {
+      return;
+    }
     try {
       const { token } = await requestLogin({
         id: formik.values.id,
