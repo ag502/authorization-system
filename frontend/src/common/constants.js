@@ -11,6 +11,7 @@ export const requestMessage = {
   SERVER_ERROR: "서버 오류입니다. 잠시 후에 시도해 주세요",
   ACCOUNT_NOT_EXIST: "존재하지 않는 계정 입니다",
   NOT_AUTHORIZED: "로그인 해주세요",
+  ALREADY_EXISTED: "이미 존재하는 계정 입니다.",
 };
 
 export const inputPlaceholder = {

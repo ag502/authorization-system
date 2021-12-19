@@ -2,6 +2,7 @@ import axios from "./base";
 import { requestMessage } from "../constants";
 import { getTokenfromLocalStorage } from "../manageToken";
 
+// 로그인
 export const requestLogin = (params) => {
   return new Promise((resolve, reject) => {
     axios
@@ -21,6 +22,7 @@ export const requestLogin = (params) => {
   });
 };
 
+// 로그인 검증
 export const checkLogin = () => {
   let errorMessage = "";
   return new Promise((resolve, reject) => {
@@ -39,6 +41,25 @@ export const checkLogin = () => {
         const { response } = err;
         if (response.status === 401) {
           errorMessage = requestMessage.NOT_AUTHORIZED;
+        } else {
+          errorMessage = requestMessage.SERVER_ERROR;
+        }
+        reject(errorMessage);
+      });
+  });
+};
+
+// 회원가입
+export const requestRegister = (params) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/register", params)
+      .then((res) => resolve(res.data))
+      .catch((err) => {
+        const { response } = err;
+        let errorMessage = "";
+        if (response.status === 409) {
+          errorMessage = requestMessage.ALREADY_EXISTED;
         } else {
           errorMessage = requestMessage.SERVER_ERROR;
         }
