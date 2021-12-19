@@ -25,7 +25,24 @@ function useFormik({ initialValues, validate, onSubmit }) {
     setTouched((props) => ({ ...props, [name]: true }));
   };
 
-  return { values, handleChange, handleBlur, errors, touched };
+  const handleSubmit = () => {
+    const newTouched = Object.keys(touched).reduce((acc, curName) => {
+      return { ...acc, [curName]: true };
+    }, {});
+    const newErrors = validate(values);
+
+    setTouched(newTouched);
+    setErrors(newErrors);
+
+    for (const curName in newErrors) {
+      if (newErrors[curName]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  return { values, handleChange, handleBlur, handleSubmit, errors, touched };
 }
 
 export default useFormik;

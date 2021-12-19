@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
 import AuthForm from "../layout/auth-form";
-import { Input, InputError, Button, SnackBar } from "../components/common";
+import {
+  ValidationInput,
+  InputError,
+  Button,
+  SnackBar,
+} from "../components/common";
 
 import Validator from "../common/validator";
 import useFormik from "../hooks/useFormik";
@@ -59,7 +64,7 @@ function Login() {
     <>
       <AuthForm>
         <div>
-          <LoginInput
+          <ValidationInput
             name='id'
             type='text'
             fullWidth
@@ -74,7 +79,7 @@ function Login() {
           ) : null}
         </div>
         <div>
-          <LoginInput
+          <ValidationInput
             name='password'
             type='password'
             fullWidth
@@ -105,14 +110,6 @@ function Login() {
     </>
   );
 }
-
-const LoginInput = styled(Input)`
-  && {
-    border-color: ${(props) => (props.isError ? "#d32f2f" : "#f5f5f5")};
-  }
-  outline-color: #0aaf9e;
-  margin-bottom: 10px;
-`;
 
 const RegisterLinkContainer = styled.div`
   text-align: center;

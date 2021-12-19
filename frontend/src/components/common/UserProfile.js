@@ -16,11 +16,9 @@ function UserProfile({ size, userName }) {
 const ProfileContainer = styled.div``;
 
 const ProfileImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 200px;
   height: 200px;
+  margin: 0 auto;
   border-radius: 100%;
   background-color: gray;
   font-size: 100px;
