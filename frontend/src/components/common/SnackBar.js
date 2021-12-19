@@ -42,7 +42,7 @@ const alertColor = {
   },
   fontColor: {
     error: "#5F2120",
-    succes: "#1E4620",
+    success: "#1E4620",
   },
 };
 
