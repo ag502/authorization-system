@@ -50,7 +50,11 @@ function Login() {
   const checkAuth = useCallback(async () => {
     try {
       const { userData } = await checkLogin();
-      navigate("/main", { state: { userName: userData.data } });
+      if (userData.roll === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/main");
+      }
     } catch (err) {}
   }, []);
 
@@ -60,12 +64,16 @@ function Login() {
       return;
     }
     try {
-      const { token } = await requestLogin({
+      const { token, roll } = await requestLogin({
         id: formik.values.id,
         password: formik.values.password,
       });
       addTokenToLocalStorage(token);
-      navigate("/main");
+      if (roll === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/main");
+      }
     } catch (err) {
       setSnackBarMsg(err);
       setSnackBarOpen(true);

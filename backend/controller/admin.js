@@ -3,7 +3,10 @@ const db = require("../models");
 const { User } = db;
 
 async function getAllUsers() {
-  const users = await User.findAll({ attributes: ["id", "name", "createdAt"] });
+  const users = await User.findAll({
+    where: { roll: false },
+    attributes: ["id", "name", "createdAt"],
+  });
   return users;
 }
 
