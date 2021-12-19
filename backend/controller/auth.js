@@ -18,11 +18,19 @@ async function checkAccount(id, password) {
   }
 }
 
-function makeJWTToken(id) {
+async function makeJWTToken(id) {
+  const curUser = await User.findOne({ where: { name: id } });
+  const roll = curUser.roll ? "admin" : "general";
+
   return new Promise((resolve, reject) => {
-    jwt.sign({ data: id }, secret, { expiresIn: jwtExpire }, (err, token) => {
-      err ? reject(err) : resolve(token);
-    });
+    jwt.sign(
+      { data: id, roll },
+      secret,
+      { expiresIn: jwtExpire },
+      (err, token) => {
+        err ? reject(err) : resolve({ token, roll });
+      }
+    );
   });
 }
 

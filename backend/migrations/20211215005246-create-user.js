@@ -13,6 +13,10 @@ module.exports = {
       password: {
         type: Sequelize.STRING(100),
       },
+      roll: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
