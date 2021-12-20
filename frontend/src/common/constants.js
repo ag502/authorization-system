@@ -14,6 +14,7 @@ export const requestMessage = {
   SERVER_ERROR: "서버 오류입니다. 잠시 후에 시도해 주세요",
   ACCOUNT_NOT_EXIST: "존재하지 않는 계정 입니다",
   NOT_AUTHORIZED: "로그인 해주세요",
+  NOT_ADMIN: "권한이 없습니다",
   ALREADY_EXISTED: "이미 존재하는 계정 입니다",
   REGISTER_SUCCESS: "가입 되었습니다",
 };

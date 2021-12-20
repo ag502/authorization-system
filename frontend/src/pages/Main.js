@@ -1,9 +1,8 @@
 import { useEffect, useCallback, useState, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { SnackBar, UserProfile } from "../components/common";
-
 import { checkLogin } from "../common/api/auth";
 import { removeTokenToLocalStorage } from "../common/manageToken";
 
