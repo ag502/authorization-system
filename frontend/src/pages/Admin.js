@@ -32,18 +32,18 @@ function Admin() {
       <Table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Account</th>
-            <th>가입일</th>
+            <TableHeader>ID</TableHeader>
+            <TableHeader>Account</TableHeader>
+            <TableHeader>가입일</TableHeader>
           </tr>
         </thead>
         <tbody>
           {accounts.map((account) => (
-            <tr key={account.id}>
+            <TableRow key={account.id}>
               <TableCell>{account.id}</TableCell>
               <TableCell>{account.name}</TableCell>
               <TableCell>{parseDashedDate(account.createdAt)}</TableCell>
-            </tr>
+            </TableRow>
           ))}
         </tbody>
       </Table>
@@ -64,9 +64,17 @@ const Table = styled.table`
   border-collapse: collapse;
 `;
 
+const TableHeader = styled.th`
+  padding: 15px;
+`;
+
+const TableRow = styled.tr`
+  border-top: 0.5px solid #e0e0e0;
+`;
+
 const TableCell = styled.td`
   text-align: center;
-  border-top: 1px solid #000000;
+  padding: 15px;
 `;
 
 const LogoutLink = styled.div`
